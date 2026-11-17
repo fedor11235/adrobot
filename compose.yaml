@@ -1,0 +1,28 @@
+services:
+  adrobot:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      APP_MODE: ${APP_MODE:-demo}
+      KEITARO_URL: ${KEITARO_URL:-}
+      KEITARO_API_KEY: ${KEITARO_API_KEY:-}
+      KEITARO_TIMEOUT: ${KEITARO_TIMEOUT:-15}
+      DEFAULT_DOMAIN_ID: ${DEFAULT_DOMAIN_ID:-}
+      DEFAULT_GROUP_ID: ${DEFAULT_GROUP_ID:-}
+      DEFAULT_SOURCE_ID: ${DEFAULT_SOURCE_ID:-}
+      APP_USERNAME: ${APP_USERNAME:-adrobot}
+      APP_PASSWORD: ${APP_PASSWORD:-}
+      DATABASE_URL: sqlite:////data/adrobot.db
+      DEMO_DATABASE_URL: sqlite:////data/keitaro-demo.db
+    volumes:
+      - adrobot-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/static/favicon.svg')"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+volumes:
+  adrobot-data:

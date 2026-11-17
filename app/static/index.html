@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Adrobot — управление кампаниями</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#workspace">К содержимому</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Кампании">
+      <a href="/" class="brand"><span class="brand-mark" aria-hidden="true">a</span>adrobot<span class="brand-dot">®</span></a>
+      <p class="sidebar-caption">КАМПАНИИ ПОД КОНТРОЛЕМ</p>
+      <button class="new-button" id="new-campaign"><span aria-hidden="true">＋</span> Новая кампания</button>
+      <div class="side-section"><span>КАМПАНИИ</span><span id="campaign-count">—</span></div>
+      <label class="search-label"><span class="sr-only">Поиск кампаний</span><input id="campaign-search" type="search" placeholder="Название или ID…" autocomplete="off"></label>
+      <nav id="campaign-list" aria-label="Список кампаний"><p class="side-empty">Загружаем кампании…</p></nav>
+      <div class="sidebar-bottom"><span class="connection-dot" id="connection-dot"></span><span id="connection-label">Подключаемся…</span><a href="/docs" target="_blank" rel="noopener" aria-label="Документация API, новая вкладка">API ↗</a></div>
+    </aside>
+    <main id="workspace" tabindex="-1">
+      <header class="topbar"><span>РАБОЧЕЕ ПРОСТРАНСТВО <span class="topbar-slash">/</span> КАМПАНИИ</span><span class="mode-label" id="mode-label">ADROBOT</span></header>
+      <div id="demo-banner" class="demo-banner" hidden>Деморежим. Все изменения сохраняются в отдельном тестовом трекере.</div>
+      <div class="content">
+        <div id="page-error" class="notice error" role="alert" hidden></div>
+        <div id="campaign-content"><div class="empty-state"><span class="empty-symbol" aria-hidden="true">↗</span><h1>Ваши кампании.<br>В одном месте.</h1><p>Выберите кампанию слева или создайте новую.</p></div></div>
+      </div>
+      <footer class="page-footer"><span>ADROBOT / KEITARO WORKSPACE</span><span>Каждое изменение — под вашим контролем.</span></footer>
+    </main>
+  </div>
+  <dialog id="create-dialog" aria-labelledby="create-title">
+    <form id="create-form">
+      <div class="dialog-heading"><div><p class="eyebrow">НОВАЯ КАМПАНИЯ</p><h2 id="create-title">Начнём с основ.</h2></div><button type="button" class="icon-button" id="close-dialog" aria-label="Закрыть">×</button></div>
+      <p class="dialog-intro">Создадим кампанию с геофильтром и потоком на выбранный оффер.</p>
+      <div id="form-error" class="notice error" role="alert" hidden></div>
+      <label class="field">Название кампании<input name="name" required maxlength="255" placeholder="Например, test_ivanov_RO" autocomplete="off"></label>
+      <div class="form-grid">
+        <label class="field">Страны<input name="geo" required placeholder="AU, MX, RO" autocomplete="off"><small>Двухбуквенные коды через запятую</small></label>
+        <div class="field">Оффер<div id="create-picker"></div></div>
+      </div>
+      <details class="advanced" open><summary>Настройки кампании</summary><div class="settings-grid">
+        <label class="field">Домен<select name="domain_id" required></select></label>
+        <label class="field">Группа<select name="group_id" required></select></label>
+        <label class="field">Источник<select name="source_id" required></select></label>
+      </div></details>
+      <div class="flow-preview"><span>01</span><p>Указанные страны <b>→ google.com</b></p><span>02</span><p>Остальной трафик <b>→ выбранный оффер</b></p></div>
+      <div class="dialog-actions"><button type="button" class="button secondary" id="cancel-dialog">Отмена</button><button type="submit" class="button primary" id="create-submit">Создать кампанию <span aria-hidden="true">↗</span></button></div>
+    </form>
+  </dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <div class="busy-indicator" id="busy-indicator" role="status" hidden><span class="spinner"></span> Выполняем запрос…</div>
+</body>
+</html>

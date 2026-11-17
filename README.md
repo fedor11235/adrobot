@@ -9,8 +9,8 @@
 Нужны Python 3.12+ и [uv](https://docs.astral.sh/uv/getting-started/installation/).
 
 ```bash
-git clone https://github.com/fedor11235/f.avdeev.git
-cd f.avdeev
+git clone https://github.com/fedor11235/adrobot.git
+cd adrobot
 cp .env.example .env
 uv sync --frozen
 uv run alembic upgrade head
